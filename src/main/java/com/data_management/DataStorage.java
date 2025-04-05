@@ -57,7 +57,7 @@ public class DataStorage {
      *                  epoch
      * @return a list of PatientRecord objects that fall within the specified time
      *         range
-     */
+    */
     public List<PatientRecord> getRecords(int patientId, long startTime, long endTime) {
         Patient patient = patientMap.get(patientId);
         if (patient != null) {
@@ -65,7 +65,7 @@ public class DataStorage {
         }
         return new ArrayList<>(); // return an empty list if no patient is found
     }
-
+    
     /**
      * Retrieves a collection of all patients stored in the data storage.
      *
