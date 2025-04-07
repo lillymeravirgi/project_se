@@ -13,13 +13,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 
-public class fileOutputStrategy implements OutputStrategy {
+//changed fileOutputStrategy to FileOutputStrategy as classes need to be written in UpperCamelCase
+//see google java style guide 5.2.2 
+public class FileOutputStrategy implements OutputStrategy {
 
     private String BaseDirectory;
 
     public final ConcurrentHashMap<String, String> file_map = new ConcurrentHashMap<>();
 
-    public fileOutputStrategy(String baseDirectory) {
+    public FileOutputStrategy(String baseDirectory) {
 
         this.BaseDirectory = baseDirectory;
     }
