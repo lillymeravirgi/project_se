@@ -17,25 +17,26 @@ public class AlertGenerator {
      * The {@code DataStorage} is used to retrieve patient data that this class
      * will monitor and evaluate.
      *
-     * @param dataStorage the data storage system that provides access to patient
-     *                    data
+     * @param dataStorage the data storage system that provides access to patient data
      */
     public AlertGenerator(DataStorage dataStorage) {
         this.dataStorage = dataStorage;
     }
 
+    //Fix the link
     /**
      * Evaluates the specified patient's data to determine if any alert conditions
      * are met. If a condition is met, an alert is triggered via the
-     * {@link #triggerAlert}
+     * {@link #triggerAlert(Alert)}
      * method. This method should define the specific conditions under which an
-     * alert
-     * will be triggered.
+     * alert will be triggered.
      *
      * @param patient the patient data to evaluate for alert conditions
      */
+
+    //TODO comment
     public void evaluateData(Patient patient) {
-        // Implementation goes here
+        // TODO: Implementation goes here
     }
 
     /**
@@ -46,7 +47,9 @@ public class AlertGenerator {
      *
      * @param alert the alert object containing details about the alert condition
      */
+
+    //TODO comment
     private void triggerAlert(Alert alert) {
-        // Implementation might involve logging the alert or notifying staff
+        // TODO: Implementation might involve logging the alert or notifying staff
     }
 }
