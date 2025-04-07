@@ -1,8 +1,3 @@
-## Project Members
-- Student ID Virginia Simonetto: 6394271
- Student ID Kira Frielingsdorf: 6374869
-
-
 # Cardio Data Simulator
 
 The Cardio Data Simulator is a Java-based application designed to simulate real-time cardiovascular data for multiple patients. This tool is particularly useful for educational purposes, enabling students to interact with real-time data streams of ECG, blood pressure, blood saturation, and other cardiovascular signals.
@@ -68,3 +63,7 @@ java -jar target/cardio_generator-1.0-SNAPSHOT.jar --patient-count 100 --output 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Project Members
+- Student ID Virginia Simonetto: 6394271
+ Student ID Kira Frielingsdorf: 6374869
