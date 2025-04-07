@@ -1,6 +1,6 @@
 ## Project Members
 - Student ID Virginia Simonetto: 6394271
-
+ Student ID Kira Frielingsdorf: 6374869
 
 
 # Cardio Data Simulator
