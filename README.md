@@ -64,6 +64,6 @@ java -jar target/cardio_generator-1.0-SNAPSHOT.jar --patient-count 100 --output 
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Project Members
+## Project Members Group 14
 - Student ID Virginia Simonetto: 6394271
- Student ID Kira Frielingsdorf: 6374869
+- Student ID Kira Frielingsdorf: 6374869
