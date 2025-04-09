@@ -42,7 +42,7 @@ public class FileOutputStrategy implements OutputStrategy {
             return;
         }
         // Set the filePath variable
-        //changed fielPath to lowerCamelCase
+        // hanged fielPath to lowerCamelCase
         String filePath = fileMap.computeIfAbsent(label, k -> Paths.get(baseDirectory, label + ".txt").toString());
 
         // Write the data to the file
