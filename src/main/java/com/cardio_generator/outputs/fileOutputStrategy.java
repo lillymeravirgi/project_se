@@ -30,8 +30,6 @@ public class FileOutputStrategy implements OutputStrategy {
      * @param label the type of data eg. ECG, Saturdation,... 
      * @param data data value eg. 90.0%
      * 
-     * @return the patient data is added to file
-     * 
      */
     public void output(int patientId, long timestamp, String label, String data) {
         try {
