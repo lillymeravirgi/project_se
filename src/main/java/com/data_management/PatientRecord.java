@@ -9,7 +9,7 @@ package com.data_management;
  * the measurement value, and the exact timestamp when the measurement was
  * taken.
  */
-public class PatientRecord {
+public class PatientRecord{
     private int patientId;
     private String recordType; // Example: ECG, blood pressure, etc.
     private double measurementValue; // Example: heart rate
@@ -66,5 +66,25 @@ public class PatientRecord {
      */
     public String getRecordType() {
         return recordType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o.getClass().equals(this.getClass())){
+            PatientRecord oRecord = (PatientRecord) o;
+            if (patientId == oRecord.getPatientId()){
+                if (measurementValue == oRecord.getMeasurementValue()){
+                    if (timestamp == oRecord.getTimestamp()){
+                        if(recordType.equals(oRecord.getRecordType())){
+                            return true;
+                        }
+                    }
+                }
+
+            }
+        }
+        return false;
+
+
     }
 }

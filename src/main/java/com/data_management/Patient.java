@@ -50,11 +50,8 @@ public class Patient {
      * @param endTime   the end of the time range, in milliseconds since UNIX epoch
      * @return a list of PatientRecord objects that fall within the specified time
      *         range
-     */
-
-    
+     */    
     public List<PatientRecord> getRecords(long startTime, long endTime) {
-        // TODO Implement and test this method
         List<PatientRecord> result = new ArrayList<>();
         for (PatientRecord record : patientRecords) {
             long time = record.getTimestamp();
