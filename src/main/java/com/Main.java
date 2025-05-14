@@ -1,9 +1,9 @@
 package com;
+
 import com.data_management.DataStorage;
+import com.cardio_generator.HealthDataSimulator;
 
 import java.io.IOException;
-
-import com.cardio_generator.HealthDataSimulator;
 
 public class Main {
     public static void main(String[] args) throws IOException{

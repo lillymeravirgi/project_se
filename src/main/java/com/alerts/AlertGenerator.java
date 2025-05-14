@@ -1,7 +1,7 @@
 package com.alerts;
 
-import com.data_management.DataStorage;
-import com.data_management.Patient;
+import com.data_management.*;
+import java.util.*;
 
 /**
  * The {@code AlertGenerator} class is responsible for monitoring patient data
@@ -31,9 +31,104 @@ public class AlertGenerator {
      * alert will be triggered.
      * @param patient the patient data to evaluate for alert conditions
      */
-    // Added TODO comment
+
     public void evaluateData(Patient patient) {
-        // TODO: Implementation goes here
+        List<PatientRecord> records = patient.getRecords(Long.MIN_VALUE, Long.MAX_VALUE);
+        List<PatientRecord> bpRecords = new ArrayList<>();
+        List<PatientRecord> spo2Records = new ArrayList<>();
+        List<PatientRecord> ecgRecords = new ArrayList<>();
+
+        for (PatientRecord record : records) {
+            switch (record.getRecordType()) {
+                case "BloodPressureSystolic":
+                case "BloodPressureDiastolic":
+                    bpRecords.add(record);
+                    break;
+                case "SpO2":
+                    spo2Records.add(record);
+                    break;
+                case "ECG":
+                    ecgRecords.add(record);
+                    break;
+                case "AlertTrigger":
+                    triggerAlert(new Alert(String.valueOf(patient.getPatientId()), "Manual Alert Triggered", record.getTimestamp()));
+                    break;
+            }
+        }
+
+        checkBloodPressureAlerts(patient.getPatientId(), bpRecords);
+        checkSpO2Alerts(patient.getPatientId(), spo2Records);
+        checkCombinedAlert(patient.getPatientId(), bpRecords, spo2Records);
+        checkECGAlerts(patient.getPatientId(), ecgRecords);
+    }
+
+    private void checkBloodPressureAlerts(int patientId, List<PatientRecord> bpRecords) {
+        bpRecords.sort(Comparator.comparingLong(PatientRecord::getTimestamp));
+
+        for (int i = 2; i < bpRecords.size(); i++) {
+            double val1 = bpRecords.get(i - 2).getMeasurementValue();
+            double val2 = bpRecords.get(i - 1).getMeasurementValue();
+            double val3 = bpRecords.get(i).getMeasurementValue();
+            long timestamp = bpRecords.get(i).getTimestamp();
+
+            if ((val2 - val1 > 10 && val3 - val2 > 10) || (val1 - val2 > 10 && val2 - val3 > 10)) {
+                triggerAlert(new Alert(String.valueOf(patientId), "BP Trend Alert", timestamp));
+            }
+        }
+
+        for (PatientRecord record : bpRecords) {
+            double val = record.getMeasurementValue();
+            if (val > 180 || val < 90) {
+                triggerAlert(new Alert(String.valueOf(patientId), "Critical Blood Pressure", record.getTimestamp()));
+            }
+        }
+    }
+
+    private void checkSpO2Alerts(int patientId, List<PatientRecord> spo2Records) {
+        spo2Records.sort(Comparator.comparingLong(PatientRecord::getTimestamp));
+
+        for (int i = 0; i < spo2Records.size(); i++) {
+            PatientRecord record = spo2Records.get(i);
+            if (record.getMeasurementValue() < 92) {
+                triggerAlert(new Alert(String.valueOf(patientId), "Low SpO2 Alert", record.getTimestamp()));
+            }
+
+            for (int j = i + 1; j < spo2Records.size(); j++) {
+                PatientRecord later = spo2Records.get(j);
+                if (later.getTimestamp() - record.getTimestamp() <= 600000 &&
+                    record.getMeasurementValue() - later.getMeasurementValue() >= 5) {
+                    triggerAlert(new Alert(String.valueOf(patientId), "Rapid SpO2 Drop", later.getTimestamp()));
+                    break;
+                }
+            }
+        }
+    }
+
+    private void checkCombinedAlert(int patientId, List<PatientRecord> bpRecords, List<PatientRecord> spo2Records) {
+        for (PatientRecord bp : bpRecords) {
+            if (bp.getMeasurementValue() < 90) {
+                for (PatientRecord spo2 : spo2Records) {
+                    if (Math.abs(bp.getTimestamp() - spo2.getTimestamp()) <= 600000 && spo2.getMeasurementValue() < 92) {
+                        triggerAlert(new Alert(String.valueOf(patientId), "Hypotensive Hypoxemia Alert", spo2.getTimestamp()));
+                    }
+                }
+            }
+        }
+    }
+
+    private void checkECGAlerts(int patientId, List<PatientRecord> ecgRecords) {
+        final int WINDOW_SIZE = 5;
+        for (int i = WINDOW_SIZE; i < ecgRecords.size(); i++) {
+            double sum = 0;
+            for (int j = i - WINDOW_SIZE; j < i; j++) {
+                sum += ecgRecords.get(j).getMeasurementValue();
+            }
+            double avg = sum / WINDOW_SIZE;
+            double peak = ecgRecords.get(i).getMeasurementValue();
+            if (peak > avg * 1.5) {
+                triggerAlert(new Alert(String.valueOf(patientId), "ECG Spike Alert", ecgRecords.get(i).getTimestamp()));
+            }
+        }
     }
 
     /**
@@ -45,6 +140,8 @@ public class AlertGenerator {
      */
     //Added TODO comment
     private void triggerAlert(Alert alert) {
-        // TODO: Implementation might involve logging the alert or notifying staff
+        System.out.println("ALERT TRIGGERED: " + alert.getCondition() +
+                " | Patient ID: " + alert.getPatientId() +
+                " | Time: " + alert.getTimestamp());
     }
 }
