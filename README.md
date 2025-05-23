@@ -64,6 +64,14 @@ java -jar target/cardio_generator-1.0-SNAPSHOT.jar --patient-count 100 --output 
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## UML Models
+To plan how the components of the different systems in this project link together we created UML diagrams. They include the Alert-generation system, the Patient Identification System, the Data Access Layer and the Data storage system. 
+See here:
+https://github.com/lillymeravirgi//project_se/tree/master/uml_models
+
+Remark: the final code might slightly differ from structure shown in the UML diagrams. The UML diagramms were created using lucid.app they are a result of both Virginia's and Kira's work. Uploaded as one.
+
+
 ## Project Members Group 14
 - Student ID Virginia Simonetto: 6394271
 - Student ID Kira Frielingsdorf: 6374869
