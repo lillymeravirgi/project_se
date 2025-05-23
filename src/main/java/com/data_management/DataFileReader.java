@@ -3,12 +3,11 @@ package com.data_management;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 
@@ -53,7 +52,7 @@ public class DataFileReader implements DataReader{
                     String value = matcher.group(4);
                     double measurementValue = removePercentSign(value);
 
-                     dataStorage.addPatientData(patientId, measurementValue, recordType, timestamp);
+                    dataStorage.addPatientData(patientId, measurementValue, recordType, timestamp);
                     
                 }
             }
