@@ -71,6 +71,12 @@ https://github.com/lillymeravirgi//project_se/tree/master/uml_models
 
 Remark: the final code might slightly differ from structure shown in the UML diagrams. The UML diagramms were created using lucid.app they are a result of both Virginia's and Kira's work. Uploaded as one.
 
+## JUnit Test and Code Coverage
+Test results and coverage screenshots:
+https://github.com/lillymeravirgi/project_se/tree/master/unit_test_verfication
+We provided tests for the AlertGenerator, Alert, FileOutputStrategy, TcpOutputStrategy, DataStorage, DataFileReader, Patient, and PatientRecord classes. 
+The Main class was not tested, as it only handles basic routing and control logic. 
+We also did not write separate tests for the data generators; instead, we used them to simulate input for testing the alert logic. Since the alerts were triggered correctly during these tests, we considered the generators to be functioning as expected.
 
 ## Project Members Group 14
 - Student ID Virginia Simonetto: 6394271
