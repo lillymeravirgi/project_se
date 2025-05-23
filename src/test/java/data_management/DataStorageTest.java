@@ -21,7 +21,7 @@ class DataStorageTest {
         
 
 
-        DataStorage storage = new DataStorage();
+        DataStorage storage = DataStorage.getInstance();
         storage.addPatientData(1, 100.0, "WhiteBloodCells", 1714376789050L);
         storage.addPatientData(1, 200.0, "WhiteBloodCells", 1714376789051L);
 
@@ -30,8 +30,15 @@ class DataStorageTest {
         assertEquals(100.0, records.get(0).getMeasurementValue()); // Validate first record
         assertEquals(200.0, records.get(1).getMeasurementValue()); // Validate second record
             
-
-        
     }
     
+    /*
+     * method checks if the singleton pattern is correctly implemented
+     */
+    @Test
+    void checkSingleton(){
+        DataStorage dataStorage = DataStorage.getInstance();
+        DataStorage seconDataStorage = DataStorage.getInstance();
+        assertEquals(dataStorage, seconDataStorage);
+    }
 }

@@ -32,7 +32,7 @@ public class DataFileReaderTest {
 
 
         dataFileReader = new DataFileReader(tempFile.toString());
-        storage = new DataStorage();
+        storage = DataStorage.getInstance();
 
     }
 
