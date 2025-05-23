@@ -18,12 +18,7 @@ class DataStorageTest {
      */
     @Test
     void testAddAndGetRecords() {
-        Path tempFile;
-        try {
-            tempFile = Files.createTempFile("patient_data", ".txt");
-            String data =" Patient ID: 47, Timestamp: 1746730876, Label: ECG, Data: -0.2905138768980464 \n"+ 
-        "Patient ID: 47, Timestamp: 1746730877, Label: Saturation, Data: 99.0%\n";
-        Files.writeString(tempFile, data);
+        
 
 
         DataStorage storage = new DataStorage();
@@ -33,12 +28,7 @@ class DataStorageTest {
         List<PatientRecord> records = storage.getRecords(1, 1714376789050L, 1714376789051L);
         assertEquals(2, records.size()); // Check if two records are retrieved
         assertEquals(100.0, records.get(0).getMeasurementValue()); // Validate first record
-        assertEquals(100.0, records.get(1).getMeasurementValue()); // Validate first record
-    
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        assertEquals(200.0, records.get(1).getMeasurementValue()); // Validate second record
             
 
         
