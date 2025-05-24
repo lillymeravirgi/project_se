@@ -39,8 +39,6 @@ public class RepeatedAlertDecorator extends AlertDecorator{
     
     @Override
     public String getAllDetails() {
-        
-        return baseAlert.getAllDetails() +
-               " | Repeated " + repetitions + " times every " + repeatIntervalSec + " Seconds";
+        return baseAlert.getAllDetails().concat(" | Repeated " + repetitions + " times every " + repeatIntervalSec + " Seconds");
     }
 }

@@ -9,6 +9,10 @@ public class PriorityAlertDecorator extends AlertDecorator{
         this.priorityLevel = priorityLevel;
     }
 
+    public String getPriority(){
+        return priorityLevel;
+    }
+
     @Override
     public String getAllDetails() {
         return "[Priority: " + priorityLevel + "] " + baseAlert.getAllDetails();

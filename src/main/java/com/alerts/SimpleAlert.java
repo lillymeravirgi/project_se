@@ -25,7 +25,7 @@ public class SimpleAlert implements Alert{
     }
 
     public String getAllDetails(){
-        return String.format("Patient ID: %d, Timestamp: %d, Condition: %d", 
+        return String.format("Patient ID: %s, Timestamp: %d, Condition: %s", 
         patientId, timestamp, condition);
     }
 }
