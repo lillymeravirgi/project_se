@@ -51,7 +51,7 @@ public class AlertGenerator {
                     ecgRecords.add(record);
                     break;
                 case "AlertTrigger":
-                    triggerAlert(new Alert(String.valueOf(patient.getPatientId()), "Manual Alert Triggered", record.getTimestamp()));
+                    triggerAlert(new SimpleAlert(String.valueOf(patient.getPatientId()), "Manual Alert Triggered", record.getTimestamp()));
                     break;
             }
         }
@@ -72,14 +72,14 @@ public class AlertGenerator {
             long timestamp = bpRecords.get(i).getTimestamp();
 
             if ((val2 - val1 > 10 && val3 - val2 > 10) || (val1 - val2 > 10 && val2 - val3 > 10)) {
-                triggerAlert(new Alert(String.valueOf(patientId), "BP Trend Alert", timestamp));
+                triggerAlert(new SimpleAlert(String.valueOf(patientId), "BP Trend Alert", timestamp));
             }
         }
 
         for (PatientRecord record : bpRecords) {
             double val = record.getMeasurementValue();
             if (val > 180 || val < 90) {
-                triggerAlert(new Alert(String.valueOf(patientId), "Critical Blood Pressure", record.getTimestamp()));
+                triggerAlert(new SimpleAlert(String.valueOf(patientId), "Critical Blood Pressure", record.getTimestamp()));
             }
         }
     }
@@ -90,14 +90,14 @@ public class AlertGenerator {
         for (int i = 0; i < spo2Records.size(); i++) {
             PatientRecord record = spo2Records.get(i);
             if (record.getMeasurementValue() < 92) {
-                triggerAlert(new Alert(String.valueOf(patientId), "Low SpO2 Alert", record.getTimestamp()));
+                triggerAlert(new SimpleAlert(String.valueOf(patientId), "Low SpO2 Alert", record.getTimestamp()));
             }
 
             for (int j = i + 1; j < spo2Records.size(); j++) {
                 PatientRecord later = spo2Records.get(j);
                 if (later.getTimestamp() - record.getTimestamp() <= 600000 &&
                     record.getMeasurementValue() - later.getMeasurementValue() >= 5) {
-                    triggerAlert(new Alert(String.valueOf(patientId), "Rapid SpO2 Drop", later.getTimestamp()));
+                    triggerAlert(new SimpleAlert(String.valueOf(patientId), "Rapid SpO2 Drop", later.getTimestamp()));
                     break;
                 }
             }
@@ -109,7 +109,7 @@ public class AlertGenerator {
             if (bp.getMeasurementValue() < 90) {
                 for (PatientRecord spo2 : spo2Records) {
                     if (Math.abs(bp.getTimestamp() - spo2.getTimestamp()) <= 600000 && spo2.getMeasurementValue() < 92) {
-                        triggerAlert(new Alert(String.valueOf(patientId), "Hypotensive Hypoxemia Alert", spo2.getTimestamp()));
+                        triggerAlert(new SimpleAlert(String.valueOf(patientId), "Hypotensive Hypoxemia Alert", spo2.getTimestamp()));
                     }
                 }
             }
@@ -126,7 +126,7 @@ public class AlertGenerator {
             double avg = sum / WINDOW_SIZE;
             double peak = ecgRecords.get(i).getMeasurementValue();
             if (peak > avg * 1.5) {
-                triggerAlert(new Alert(String.valueOf(patientId), "ECG Spike Alert", ecgRecords.get(i).getTimestamp()));
+                triggerAlert(new SimpleAlert(String.valueOf(patientId), "ECG Spike Alert", ecgRecords.get(i).getTimestamp()));
             }
         }
     }
@@ -139,7 +139,7 @@ public class AlertGenerator {
      * @param alert the alert object containing details about the alert condition
      */
     //Added TODO comment
-    private void triggerAlert(Alert alert) {
+    private void triggerAlert(SimpleAlert alert) {
         System.out.println("ALERT TRIGGERED: " + alert.getCondition() +
                 " | Patient ID: " + alert.getPatientId() +
                 " | Time: " + alert.getTimestamp());
