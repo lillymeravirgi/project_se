@@ -66,11 +66,10 @@ public class WebSocketClientImpl extends WebSocketClient{
     }
 
     private double removePercentSign(String data) {
-          
+        
         if (data.contains("%")) {
-           
             data = data.replace("%", "");
-            return Double.parseDouble(data) / 100.0; 
+            return Double.parseDouble(data) / 100.0;
         } else {
             return Double.parseDouble(data);
         }
