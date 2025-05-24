@@ -9,5 +9,5 @@ public interface DataReader {
      * @param dataStorage the storage where data will be stored
      * 
      */
-    void readData();
+    void readData(DataStorage dataStorage);
 }

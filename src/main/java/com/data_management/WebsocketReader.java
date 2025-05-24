@@ -1,16 +1,18 @@
 package com.data_management;
 
+import java.net.URI;
+
 public class WebsocketReader implements DataReader {
 
-    private WebSocketClientImpl client;
+    private URI uri;
 
-    public WebsocketReader(WebSocketClientImpl client){
-        this.client = client;
+    public WebsocketReader(URI uri) {
+        this.uri = uri;
     }
 
-    
     @Override
-    public void readData() {
+    public void readData(DataStorage dataStorage) {
+        WebSocketClientImpl client = new WebSocketClientImpl(uri, dataStorage);
         client.connect();
     }
     
