@@ -90,6 +90,12 @@ public class DataStorage {
         return new ArrayList<>(patientMap.values());
     }
 
+    public void addPatient(Patient patient) {
+        if (!patientMap.containsKey(patient.getPatientId())) {
+            patientMap.put(patient.getPatientId(), patient);
+        }
+    }
+    
     /**
      * The main method for the DataStorage class.
      * Initializes the system, reads data into storage, and continuously monitors
