@@ -1,12 +1,12 @@
 package com.alerts;
 
-public class RepeatedAlert extends AlertDecorator{
+public class RepeatedAlertDecorator extends AlertDecorator{
 
     private int repeatCount;
     private long repeatIntervalMs;
     
 
-    public RepeatedAlert(Alert alert, String repetitionCondition) {
+    public RepeatedAlertDecorator(Alert alert, String repetitionCondition) {
         super(alert);
 
         this.repeatCount = repeatCount;

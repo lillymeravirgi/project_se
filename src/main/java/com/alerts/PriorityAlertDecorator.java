@@ -1,10 +1,10 @@
 package com.alerts;
 
-public class PriorityAlert extends AlertDecorator{
+public class PriorityAlertDecorator extends AlertDecorator{
 
     private String priorityLevel;
 
-    public PriorityAlert(Alert alert, String priorityLevel) {
+    public PriorityAlertDecorator(Alert alert, String priorityLevel) {
         super(alert);
         this.priorityLevel = priorityLevel;
     }
