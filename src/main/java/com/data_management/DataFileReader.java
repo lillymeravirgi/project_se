@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 
 
-public class DataFileReader implements DataReader{
+public class DataFileReader{
     String filepath;
     /** 
     * The DataFileReader can be used to read data of type: Patient ID: , Timestamp: , Label: , Data:  from a file and store it 
@@ -30,12 +30,13 @@ public class DataFileReader implements DataReader{
     /** 
     * the method assumes the data in the file has the pattern: Patient ID: , Timestamp: , Label: , Data: 
     * @param dataStorage the datastorage used to store the data that is read from the file
+    * @throws IOException if there is an error reading the data
     */
-    @Override
+
     public void readData(DataStorage dataStorage) throws IOException {
         
         String regex = "Patient ID: (\\d+), Timestamp: (\\d+), Label: (\\w+), Data: (.+)\\s*";
-        ;
+        
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(filepath))) {
             Pattern pattern = Pattern.compile(regex);
