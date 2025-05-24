@@ -1,7 +1,16 @@
 package com.alerts;
 
-import com.data_management.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+import com.alerts.factories.AlertFactory;
+import com.alerts.factories.BloodOxygenAlertFactory;
+import com.alerts.factories.BloodPressureAlertFactory;
+import com.alerts.factories.ECGAlertFactory;
+import com.data_management.DataStorage;
+import com.data_management.Patient;
+import com.data_management.PatientRecord;
 
 /**
  * The {@code AlertGenerator} class is responsible for monitoring patient data
@@ -11,6 +20,10 @@ import java.util.*;
  */
 public class AlertGenerator {
     private DataStorage dataStorage;
+    private final AlertFactory bpAlertFactory = new BloodPressureAlertFactory();
+    private final AlertFactory spo2AlertFactory = new BloodOxygenAlertFactory();
+    private final AlertFactory ecgAlertFactory = new ECGAlertFactory();
+
 
     /**
      * Constructs an {@code AlertGenerator} with a specified {@code DataStorage}.
@@ -72,14 +85,16 @@ public class AlertGenerator {
             long timestamp = bpRecords.get(i).getTimestamp();
 
             if ((val2 - val1 > 10 && val3 - val2 > 10) || (val1 - val2 > 10 && val2 - val3 > 10)) {
-                triggerAlert(new SimpleAlert(String.valueOf(patientId), "BP Trend Alert", timestamp));
+                // triggerAlert(new SimpleAlert(String.valueOf(patientId), "BP Trend Alert", timestamp));
+                triggerAlert((SimpleAlert) bpAlertFactory.createAlert(String.valueOf(patientId), "BP Trend Alert", timestamp));
             }
         }
 
         for (PatientRecord record : bpRecords) {
             double val = record.getMeasurementValue();
             if (val > 180 || val < 90) {
-                triggerAlert(new SimpleAlert(String.valueOf(patientId), "Critical Blood Pressure", record.getTimestamp()));
+                // changed alert
+                triggerAlert((SimpleAlert) bpAlertFactory.createAlert(String.valueOf(patientId), "Critical Blood Pressure", record.getTimestamp()));
             }
         }
     }
@@ -90,14 +105,16 @@ public class AlertGenerator {
         for (int i = 0; i < spo2Records.size(); i++) {
             PatientRecord record = spo2Records.get(i);
             if (record.getMeasurementValue() < 92) {
-                triggerAlert(new SimpleAlert(String.valueOf(patientId), "Low SpO2 Alert", record.getTimestamp()));
+                // changed alert
+                triggerAlert((SimpleAlert) spo2AlertFactory.createAlert(String.valueOf(patientId), "Low SpO2 Alert", record.getTimestamp()));
             }
 
             for (int j = i + 1; j < spo2Records.size(); j++) {
                 PatientRecord later = spo2Records.get(j);
                 if (later.getTimestamp() - record.getTimestamp() <= 600000 &&
                     record.getMeasurementValue() - later.getMeasurementValue() >= 5) {
-                    triggerAlert(new SimpleAlert(String.valueOf(patientId), "Rapid SpO2 Drop", later.getTimestamp()));
+                    // changed alert
+                    triggerAlert((SimpleAlert) spo2AlertFactory.createAlert(String.valueOf(patientId), "Rapid SpO2 Drop", later.getTimestamp()));
                     break;
                 }
             }
@@ -126,7 +143,8 @@ public class AlertGenerator {
             double avg = sum / WINDOW_SIZE;
             double peak = ecgRecords.get(i).getMeasurementValue();
             if (peak > avg * 1.5) {
-                triggerAlert(new SimpleAlert(String.valueOf(patientId), "ECG Spike Alert", ecgRecords.get(i).getTimestamp()));
+                // changed alert
+                triggerAlert((SimpleAlert) ecgAlertFactory.createAlert(String.valueOf(patientId), "ECG Spike Alert", ecgRecords.get(i).getTimestamp()));
             }
         }
     }
