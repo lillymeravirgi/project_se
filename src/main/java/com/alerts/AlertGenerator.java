@@ -8,6 +8,7 @@ import com.alerts.factories.AlertFactory;
 import com.alerts.factories.BloodOxygenAlertFactory;
 import com.alerts.factories.BloodPressureAlertFactory;
 import com.alerts.factories.ECGAlertFactory;
+import com.alerts.strategies.AlertStrategy;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
@@ -75,7 +76,7 @@ public class AlertGenerator {
         checkECGAlerts(patient.getPatientId(), ecgRecords);
     }
 
-    private void checkBloodPressureAlerts(int patientId, List<PatientRecord> bpRecords) {
+    public void checkBloodPressureAlerts(int patientId, List<PatientRecord> bpRecords) {
         bpRecords.sort(Comparator.comparingLong(PatientRecord::getTimestamp));
 
         for (int i = 2; i < bpRecords.size(); i++) {
@@ -99,7 +100,7 @@ public class AlertGenerator {
         }
     }
 
-    private void checkSpO2Alerts(int patientId, List<PatientRecord> spo2Records) {
+    public void checkSpO2Alerts(int patientId, List<PatientRecord> spo2Records) {
         spo2Records.sort(Comparator.comparingLong(PatientRecord::getTimestamp));
 
         for (int i = 0; i < spo2Records.size(); i++) {
@@ -121,7 +122,7 @@ public class AlertGenerator {
         }
     }
 
-    private void checkCombinedAlert(int patientId, List<PatientRecord> bpRecords, List<PatientRecord> spo2Records) {
+    public void checkCombinedAlert(int patientId, List<PatientRecord> bpRecords, List<PatientRecord> spo2Records) {
         for (PatientRecord bp : bpRecords) {
             if (bp.getMeasurementValue() < 90) {
                 for (PatientRecord spo2 : spo2Records) {
@@ -133,7 +134,7 @@ public class AlertGenerator {
         }
     }
 
-    private void checkECGAlerts(int patientId, List<PatientRecord> ecgRecords) {
+    public void checkECGAlerts(int patientId, List<PatientRecord> ecgRecords) {
         final int WINDOW_SIZE = 5;
         for (int i = WINDOW_SIZE; i < ecgRecords.size(); i++) {
             double sum = 0;
@@ -156,10 +157,14 @@ public class AlertGenerator {
      * an argument.
      * @param alert the alert object containing details about the alert condition
      */
-    //Added TODO comment
-    private void triggerAlert(SimpleAlert alert) {
+    public void triggerAlert(SimpleAlert alert) {
         System.out.println("ALERT TRIGGERED: " + alert.getCondition() +
                 " | Patient ID: " + alert.getPatientId() +
                 " | Time: " + alert.getTimestamp());
     }
+
+    public void evaluateWithStrategy(Patient patient, AlertStrategy strategy) {
+        strategy.checkAlerts(patient, this); // strategy calls back into generator
+    }
+
 }
