@@ -19,7 +19,7 @@ class OxygenSaturationStrategyTest {
         Patient patient = new Patient(1);
         long now = System.currentTimeMillis();
 
-        // Add low SpO2 data using the correct method
+        // Add low SpO2 data 
         patient.addRecord(91.0, "SpO2", now);
 
         // Use a test subclass of AlertGenerator to capture alerts

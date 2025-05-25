@@ -9,8 +9,14 @@ import java.util.List;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
-
+/*
+ * tests the getRecords methods in the patient class returns the appropriate records
+ */
 public class GetRecordsTest {
+
+    /*checks if the records in the right timeframe are returned with focus 
+    * on a inclusive lower bound
+     */
     @Test
     void testInclusivelowerBound() {
         Patient patient = new Patient(123);
@@ -31,6 +37,10 @@ public class GetRecordsTest {
         assertEquals(wantedRecords, retrievedRecords);
 
     }
+
+    /*checks if the records in the right timeframe are returned with focus 
+    * on a inclusive upper bound
+     */
     @Test
     void testInclusiveupperBound() {
         Patient patient = new Patient(123);

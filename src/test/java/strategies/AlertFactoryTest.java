@@ -10,6 +10,9 @@ import com.alerts.factories.BloodOxygenAlertFactory;
 import com.alerts.factories.BloodPressureAlertFactory;
 import com.alerts.factories.ECGAlertFactory;
 
+/*
+ * class tests if the different alertFactories correctly create the different alerts
+ */
 public class AlertFactoryTest {
 
     @Test

@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import com.alerts.AlertGenerator;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
-
+/*
+ * class tests all possible reasons for alerts and if the alert is thrown
+ */
 public class AlertGeneratorTest {
 
     private DataStorage dataStorage;

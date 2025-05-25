@@ -1,7 +1,9 @@
 package data_management;
 
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.data_management.DataFileReader;
@@ -20,6 +22,9 @@ public class DataFileReaderTest {
     private DataFileReader dataFileReader;
     private DataStorage storage;
 
+    /*
+    *method creates a temporary file that can be used for tests
+    */
     @BeforeEach
     void setUp() throws IOException {
 
@@ -41,6 +46,9 @@ public class DataFileReaderTest {
         Files.deleteIfExists(tempFile);
     }
 
+    /*
+    * method tests if the dataFileReader reads the data correctly in the storage
+    */
     @Test
     void testReadData() {
         try {
@@ -63,9 +71,5 @@ public class DataFileReaderTest {
         } catch (IOException e) {
             fail("IOException should not have occurred: " + e.getMessage());
         }
-    }
-    @Test
-    void handleWrongData(){
-
     }
 }

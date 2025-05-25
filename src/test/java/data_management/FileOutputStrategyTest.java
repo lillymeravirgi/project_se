@@ -14,13 +14,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
- * the test creates a temporary file and uses the FileOutPutSTrategy to add patient data to it
- * then the file is tested for output, the right amount of lines and then the right content
+ * tests if the fileOutPutStrategy class correctly adds patient data to a file
  */
 class FileOutputStrategyTest {
 
     private Path tempDir;
 
+    /* creates temporary file to be used in the test
+     */
     @BeforeEach
     void setUp() throws IOException {
         tempDir = Files.createTempDirectory("file_output_test");
@@ -34,6 +35,13 @@ class FileOutputStrategyTest {
              .forEach(java.io.File::delete);
     }
 
+    /*
+    * uses the FileOutPutSTrategy to add patient data to it
+    * then the file is tested for
+    *   - output
+    *   - the right amount of lines 
+    *   - then the right content
+    */
     @Test
     void testOutputWritesToFile() throws IOException {
         FileOutputStrategy strategy = new FileOutputStrategy(tempDir.toString());

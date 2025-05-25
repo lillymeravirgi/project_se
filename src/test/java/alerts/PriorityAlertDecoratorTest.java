@@ -8,9 +8,13 @@ import com.alerts.Alert;
 import com.alerts.PriorityAlertDecorator;
 import com.alerts.SimpleAlert;
 
+/*
+ * class tests if a decorator can be applied 
+ * to a simple alert by testing changing methods
+ */
 public class PriorityAlertDecoratorTest {
     @Test
-    public void checkPriority(){
+    public void checkPriorityTest(){
        
         Alert alert = new SimpleAlert("12345", "Low SpO2 Alert", 1748714791);
         PriorityAlertDecorator wrappedAlert = new PriorityAlertDecorator(alert, "HIGH");

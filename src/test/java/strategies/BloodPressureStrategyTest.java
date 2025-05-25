@@ -12,6 +12,9 @@ import com.alerts.strategies.BloodPressureStrategy;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
+/*
+ * checks if the different alerts are triggert correctly by adding critical data
+ */
 class BloodPressureStrategyTest {
 
     @Test
